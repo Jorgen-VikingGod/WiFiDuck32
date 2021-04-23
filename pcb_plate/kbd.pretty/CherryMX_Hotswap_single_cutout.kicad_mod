@@ -1,0 +1,12 @@
+(module CherryMX_Hotswap_single_cutout locked (layer F.Cu) (tedit 6044FC85)
+  (fp_text reference Ref** (at 10.414 3.81) (layer F.SilkS) hide
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (fp_text value Val** (at -3.302 8.636) (layer F.Fab) hide
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (fp_line (start -7 -7) (end 7 -7) (layer Eco2.User) (width 0.15))
+  (fp_line (start -7 7) (end -7 -7) (layer Eco2.User) (width 0.15))
+  (fp_line (start 7 7) (end 7 -7) (layer Eco2.User) (width 0.15))
+  (fp_line (start -7 7) (end 7 7) (layer Eco2.User) (width 0.15))
+)
