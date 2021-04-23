@@ -1,23 +1,23 @@
 /**
- * Source: https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55fdc73db2
- *
- * USB HID Keyboard scan codes as per USB spec 1.11
- * plus some additional codes
- *
- * Created by MightyPork, 2016
- * Public domain
- *
- * Adapted from:
- * https://source.android.com/devices/input/keyboard-devices.html
- */
+   Source: https://gist.github.com/MightyPork/6da26e382a7ad91b5496ee55fdc73db2
+
+   USB HID Keyboard scan codes as per USB spec 1.11
+   plus some additional codes
+
+   Created by MightyPork, 2016
+   Public domain
+
+   Adapted from:
+   https://source.android.com/devices/input/keyboard-devices.html
+*/
 
 #ifndef USB_HID_KEYS
 #define USB_HID_KEYS
 
 /**
- * Modifier masks - used for the first byte in the HID report.
- * NOTE: The second byte in the report is reserved, 0x00
- */
+   Modifier masks - used for the first byte in the HID report.
+   NOTE: The second byte in the report is reserved, 0x00
+*/
 #define KEY_MOD_LCTRL  0x01
 #define KEY_MOD_LSHIFT 0x02
 #define KEY_MOD_LALT   0x04
@@ -28,12 +28,12 @@
 #define KEY_MOD_RMETA  0x80
 
 /**
- * Scan codes - last N slots in the HID report (usually 6).
- * 0x00 if no key pressed.
- *
- * If more than N keys are pressed, the HID reports
- * KEY_ERR_OVF in all slots to indicate this condition.
- */
+   Scan codes - last N slots in the HID report (usually 6).
+   0x00 if no key pressed.
+
+   If more than N keys are pressed, the HID reports
+   KEY_ERR_OVF in all slots to indicate this condition.
+*/
 
 #define KEY_NONE 0x00       // No key pressed
 #define KEY_ERR_OVF 0x01    //  Keyboard Error Roll Over - used for all slots if too many keys are pressed ("Phantom key")
