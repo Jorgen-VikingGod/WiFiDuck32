@@ -5,277 +5,464 @@
 -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=0.8, minimal-ui" />
-        <meta name="theme-color" content="#36393E" />
-        <meta name="description" content="WiFi Duck" />
-        <meta name="author" content="Spacehuhn - Stefan Kremser"/>
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <script src="script.js"></script>
-        <script src="index.js"></script>
-        <title>WiFi Duck</title>
-    </head>
-    <body>
-        <nav>
-            <ul class="menu">
-                <li><a href="index.html">WiFi Duck</a></li>
-                <li><a href="settings.html">Settings</a></li>
-                <li><a href="terminal.html">Terminal</a></li>
-                <li><a href="credits.html">About</a></li>
-            </ul>
-        </nav>
-        <div id="status"></div>
-        <main>
-            <section>
-                <h1>Status</h1>
-                <div class="row">
-                    <p><b>Storage: </b><span id="freeMemory">-</span></p>
-                    <button class="danger" id="format">format</button>
-                    <button class="warn" id="stop">stop</button>
-                    <button class="white" id="reconnect">reconnect</button>
-                </div>
-            </section>
-            <section>
-                <h1>Scripts <a class="reload" id="scriptsReload">&#x21bb;</a></h1>
-                <table class="table" id="scriptTable"></table>
-                <div class="row">
-                    <input placeholder="Filename /<name>" type="text" class="smooth" value="/" id="newFile"/>
-                    <button class="success" onclick="create(get_new_filename())">create</button>
-                </div>
-            </section>
-            <section>
-                <h1>Editor <a class="reload" id="editorReload">&#x21bb;</a></h1>
-                <div class="row">
-                    <input placeholder="Filename /<name>" type="text" class="smooth" value="/" id="editorFile">
-                    <button class="danger" id="editorDelete">delete</button>
-                    <button class="primary" id="editorDownload">download</button>
-                    <button class="primary" id="editorAutorun">Enable autorun</button>
-                </div>
-                <div class="row">
-                    <textarea class="smooth" id="editor"></textarea>
-                </div>
-                <div class="row">
-                    <div class="debugger">
-                        Output: <span id="editorinfo">saved</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div id="editor-primary-buttons">
-                        <button class="success" id="editorSave">save</button>
-                        <button class="warn" id="editorRun">run</button>
-                        <button class="danger" id="editorStop">stop</button>
-                    </div>
-                </div>
-            </section>
-            <section>
-                <h1>Documentation</h1>
-                <h2>Ducky Script</h2>
-                <h3>Basics</h3>
-                <p>
-                    Keys are separated by a single space.
-                    <br> Everything written in a single line gets pressed and released at the same time.
-                    <br> To write text, use the STRING function.
-                </p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Example</th>
-                            <th>Explanation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>WINDOWS
-                                <br> r
-                            </td>
-                            <td>Type the Windows key and then the r key</td>
-                        </tr>
-                        <tr>
-                            <td>WINDOWS r</td>
-                            <td>Press the Windows key and the r key simultaneously</td>
-                        </tr>
-                        <tr>
-                            <td>STRING WINDOWS r</td>
-                            <td>Write WINDOWS r</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h3>Functions</h3>
-                <table id="ducky-functions-table">
-                    <thead>
-                        <tr>
-                            <th>Command</th>
-                            <th>Example</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>REM</code></td>
-                            <td><code>REM Hello World!</code></td>
-                            <td>Comment</td>
-                        </tr>
-                        <tr>
-                            <td><code>DEFAULTDELAY</code> or <code>DEFAULT_DELAY</code></td>
-                            <td><code>DEFAULTDELAY 200</code></td>
-                            <td>Time in ms between every command</td>
-                        </tr>
-                        <tr>
-                            <td><code>DELAY</code></td>
-                            <td><code>DELAY 1000</code></td>
-                            <td>Delay in ms</td>
-                        </tr>
-                        <tr>
-                            <td><code>STRING</code></td>
-                            <td><code>STRING Hello World!</code></td>
-                            <td>Types the following string</td>
-                        </tr>
-                        <tr>
-                            <td><code>REPEAT</code> or <code>REPLAY</code></td>
-                            <td><code>REPEAT 3</code></td>
-                            <td>Repeats the last command n times</td>
-                        </tr>
-                        <tr>
-                            <td><code>LOCALE</code></td>
-                            <td><code>LOCALE DE</code></td>
-                            <td>Sets the keyboard layout. Available: <code>DE</code>, <code>GB</code>, <code>US</code>, <code>ES</code>, <code>FR</code>, <code>DK</code>, <code>RU</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><code>KEYCODE</code></td>
-                            <td><code>KEYCODE 0x02 0x04</code></td>
-                            <td>Types a specific key code (modifier, key1[, ..., key6]) in decimal or hexadecimal</td>
-                        </tr>
-                        <tr>
-                            <td><code>LED</code></td>
-                            <td><code>LED 40 20 10</code></td>
-                            <td>Changes the color of the LED in decimal RGB values (0-255)</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h3>Standard Keys</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Key</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>a</code> - <code>z</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>A</code> - <code>Z</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>0</code> - <code>9</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>F1</code> - <code>F12</code></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h3>Modifier Keys</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Key</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>CTRL</code> or <code>CONTROL</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>SHIFT</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>ALT</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>WINDOWS</code> or <code>GUI</code></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h3>Other Keys</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Key</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>ENTER</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>MENU</code> or <code>APP</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>DELETE</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>HOME</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>INSERT</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>PAGEUP</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>PAGEDOWN</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>UP</code> or <code>UPARROW</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>DOWN</code> or <code>DOWNARROW</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>LEFT</code> or <code>LEFTARROW</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>RIGHT</code> or <code>RIGHTARROW</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>TAB</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>END</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>ESC</code> or <code>ESCAPE</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>SPACE</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>PAUSE or BREAK</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>CAPSLOCK</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>NUMLOCK</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>PRINTSCREEN</code></td>
-                        </tr>
-                        <tr>
-                            <td><code>SCROLLLOCK</code></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </main>
-        <footer>
-            <a href="https://github.com/spacehuhn/WiFiDuck" target="_blank">Source</a>
-            <br><br>
-            <span id="version"></span><br>
-            Copyright (c) 2019 Stefan Kremser<br>
-            <a href="https://spacehuhn.io" target="_blank">spacehuhn.io</a>
-        </footer>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, minimal-ui" />
+    <meta name="theme-color" content="#36393E" />
+    <meta name="description" content="WiFi Duck" />
+    <meta name="author" content="Spacehuhn - Stefan Kremser" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <style></style>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <script src="index.js"></script>
+    <title>WiFi Duck 32</title>
+  </head>
+
+  <body>
+    <nav>
+      <ul class="menu">
+        <li><a href="index.html">WiFi Duck</a></li>
+        <li><a href="settings.html">Settings</a></li>
+        <li><a href="terminal.html">Terminal</a></li>
+        <li><a href="credits.html">About</a></li>
+      </ul>
+    </nav>
+    <div id="status"></div>
+    <main>
+      <section>
+        <h1>Status</h1>
+        <div class="row">
+          <p><b>SPIFFS: </b><span id="freeMemory">-</span></p>
+          <button class="danger" id="format">format</button>
+          <button class="warn" id="stop">stop</button>
+          <button class="white" id="reconnect">reconnect</button>
+        </div>
+      </section>
+      <section>
+        <h1>Profiles <a class="reload" id="reloadProfiles">&#x21bb;</a></h1>
+        <table class="table" id="profileTable"></table>
+        <div class="row">
+          <!--<input placeholder="Filename /<name>" type="text" class="smooth" value="/" id="newFile" />-->
+          <button class="success" onclick="createProfile()">create</button>
+        </div>
+      </section>
+      <section id="profileSection" style="display: none">
+        <h1><span id="profileTitle"></span></h1>
+        <table id="profileSettings">
+          <thead>
+            <tr>
+              <th class="label"></th>
+              <th></th>
+              <th class="label"></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>name</code></td>
+              <td><input type="text" placeholder="" class="smooth small" value="" id="profileName" /></td>
+              <td><code>size</code></td>
+              <td>
+                <input type="number" placeholder="" class="smooth small" value="2" min="1" max="3" id="profileSize" />
+              </td>
+            </tr>
+            <tr>
+              <td><code>bg color</code></td>
+              <td><input type="color" class="smooth small" value="#223344" id="profileUpColor" /></td>
+              <td><code>up speed</code></td>
+              <td>
+                <input
+                  type="number"
+                  placeholder=""
+                  class="smooth small"
+                  value="10"
+                  min="0"
+                  max="50"
+                  id="profileUpSpeed"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td><code>down color</code></td>
+              <td><input type="color" class="smooth small" value="#443322" id="profileDownColor" /></td>
+              <td><code>down speed</code></td>
+              <td>
+                <input
+                  type="number"
+                  placeholder=""
+                  class="smooth small"
+                  value="0"
+                  min="0"
+                  max="50"
+                  id="profileDownSpeed"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="display: flex; flex-wrap: wrap; align-items: stretch; width: 100%">
+          <div id="keypad">
+            <div id="key1" class="key" onclick="selectKey('key1')">
+              <div class="keycap"></div>
+            </div>
+            <div id="key2" class="key" onclick="selectKey('key2')">
+              <div class="keycap"></div>
+            </div>
+            <div id="key3" class="key" onclick="selectKey('key3')">
+              <div class="keycap"></div>
+            </div>
+            <div id="key4" class="key" onclick="selectKey('key4')">
+              <div class="keycap"></div>
+            </div>
+            <br />
+            <div id="key8" class="key" onclick="selectKey('key8')">
+              <div class="keycap"></div>
+            </div>
+            <div id="key7" class="key" onclick="selectKey('key7')">
+              <div class="keycap"></div>
+            </div>
+            <div id="key6" class="key" onclick="selectKey('key6')">
+              <div class="keycap"></div>
+            </div>
+            <div id="key5" class="key" onclick="selectKey('key5')">
+              <div class="keycap"></div>
+            </div>
+            <div id="key9" class="key" onclick="selectKey('key9')">
+              <div class="keycap"></div>
+            </div>
+            <div id="key10" class="key" onclick="selectKey('key10')">
+              <div class="keycap"></div>
+            </div>
+            <div id="key11" class="key" onclick="selectKey('key11')">
+              <div class="keycap"></div>
+            </div>
+            <div class="encoder">
+              <div id="enc_down" class="left" onclick="selectKey('enc_down')"></div>
+              <div id="enc_up" class="right" onclick="selectKey('enc_up')"></div>
+              <div id="enc" class="middle" onclick="selectKey('enc')"></div>
+            </div>
+            <!--
+            <div id="encoder" class="encoder" onclick="selectEncoder('encoder')">
+              <div class="encodertop"></div>
+            </div>-->
+            <button class="success" id="profileSave">save</button>
+          </div>
+          <section id="keySection" style="margin-top: 0px; display: none; flex-grow: 1">
+            <h1><span id="keyTitle"></span></h1>
+            <table id="keySettings">
+              <thead>
+                <tr>
+                  <th class="label"></th>
+                  <th></th>
+                  <th class="label"></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>name</code></td>
+                  <td><input type="text" placeholder="" class="smooth small" value="" id="keyName" /></td>
+                  <td><code>size</code></td>
+                  <td>
+                    <input type="number" placeholder="" class="smooth small" value="2" min="1" max="3" id="keySize" />
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>bg color</code></td>
+                  <td><input type="color" class="smooth small" value="#223344" id="keyUpColor" /></td>
+                  <td><code>up speed</code></td>
+                  <td>
+                    <input
+                      type="number"
+                      placeholder=""
+                      class="smooth small"
+                      value="10"
+                      min="0"
+                      max="50"
+                      id="keyUpSpeed"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>down color</code></td>
+                  <td><input type="color" class="smooth small" value="#443322" id="keyDownColor" /></td>
+                  <td><code>down speed</code></td>
+                  <td>
+                    <input
+                      type="number"
+                      placeholder=""
+                      class="smooth small"
+                      value="0"
+                      min="0"
+                      max="50"
+                      id="keyDownSpeed"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </div>
+        <div style="clear: both"></div>
+      </section>
+      <section>
+        <h1>Editor <a class="reload" id="editorReload">&#x21bb;</a></h1>
+        <div class="row">
+          <input placeholder="Filename /<name>" type="text" class="smooth" value="/" id="editorFile" />
+          <button class="danger" id="editorDelete">delete</button>
+          <button class="primary" id="editorDownload">download</button>
+          <button class="primary" id="editorAutorun">Enable autorun</button>
+        </div>
+        <div class="row">
+          <textarea class="smooth" id="editor"></textarea>
+        </div>
+        <div class="row">
+          <div class="debugger">Output: <span id="editorinfo">saved</span></div>
+        </div>
+        <div class="row">
+          <div id="editor-primary-buttons">
+            <button class="success" id="editorSave">save</button>
+            <button class="warn" id="editorRun">run</button>
+            <button class="danger" id="editorStop">stop</button>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h1>Documentation</h1>
+        <h2>Ducky Script</h2>
+        <h3>Basics</h3>
+        <p>
+          Keys are separated by a single space.
+          <br />
+          Everything written in a single line gets pressed and released at the same time. <br />
+          To write text, use the STRING function.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Example</th>
+              <th>Explanation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                WINDOWS <br />
+                r
+              </td>
+              <td>Type the Windows key and then the r key</td>
+            </tr>
+            <tr>
+              <td>WINDOWS r</td>
+              <td>Press the Windows key and the r key simultaneously</td>
+            </tr>
+            <tr>
+              <td>STRING WINDOWS r</td>
+              <td>Write WINDOWS r</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Functions</h3>
+        <table id="ducky-functions-table">
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>Example</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>REM</code></td>
+              <td><code>REM Hello World!</code></td>
+              <td>Comment</td>
+            </tr>
+            <tr>
+              <td><code>DEFAULTDELAY</code> or <code>DEFAULT_DELAY</code></td>
+              <td><code>DEFAULTDELAY 200</code></td>
+              <td>Time in ms between every command</td>
+            </tr>
+            <tr>
+              <td><code>DELAY</code></td>
+              <td><code>DELAY 1000</code></td>
+              <td>Delay in ms</td>
+            </tr>
+            <tr>
+              <td><code>STRING</code></td>
+              <td><code>STRING Hello World!</code></td>
+              <td>Types the following string</td>
+            </tr>
+            <tr>
+              <td><code>REPEAT</code> or <code>REPLAY</code></td>
+              <td><code>REPEAT 3</code></td>
+              <td>Repeats the last command n times</td>
+            </tr>
+            <tr>
+              <td><code>LOCALE</code></td>
+              <td><code>LOCALE DE</code></td>
+              <td>
+                Sets the keyboard layout. Currently supported: <code>DE</code>, <code>GB</code>, <code>US</code>,
+                <code>ES</code>, <code>FR</code>
+              </td>
+            </tr>
+            <tr>
+              <td><code>KEYCODE</code></td>
+              <td><code>KEYCODE 0x02 0x04</code></td>
+              <td>Types a specific key code (modifier, key1[, ..., key6]) in decimal or hexadecimal</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Mouse Functions</h3>
+        <table id="ducky-mouse-functions-table">
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>Example</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>WHEEL_UP</code></td>
+              <td><code>WHEEL_UP 1</code></td>
+              <td>Mouse scroll wheel up 1 step</td>
+            </tr>
+            <tr>
+              <td><code>WHEEL_DOWN</code></td>
+              <td><code>WHEEL_DOWN 1</code></td>
+              <td>Mouse scroll wheel down 1 step</td>
+            </tr>
+            <tr>
+              <td><code>MOUSE</code></td>
+              <td><code>MOUSE LEFT</code><br><code>MOUSE RIGHT</code><br><code>MOUSE MIDDLE</code></td>
+              <td>Send (left, right or middle) mouse button</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Standard Keys</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Key</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>a</code> - <code>z</code></td>
+            </tr>
+            <tr>
+              <td><code>A</code> - <code>Z</code></td>
+            </tr>
+            <tr>
+              <td><code>0</code> - <code>9</code></td>
+            </tr>
+            <tr>
+              <td><code>F1</code> - <code>F12</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Modifier Keys</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Key</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>CTRL</code> or <code>CONTROL</code></td>
+            </tr>
+            <tr>
+              <td><code>SHIFT</code></td>
+            </tr>
+            <tr>
+              <td><code>ALT</code></td>
+            </tr>
+            <tr>
+              <td><code>WINDOWS</code> or <code>GUI</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Other Keys</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Key</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>ENTER</code></td>
+            </tr>
+            <tr>
+              <td><code>MENU</code> or <code>APP</code></td>
+            </tr>
+            <tr>
+              <td><code>DELETE</code></td>
+            </tr>
+            <tr>
+              <td><code>HOME</code></td>
+            </tr>
+            <tr>
+              <td><code>INSERT</code></td>
+            </tr>
+            <tr>
+              <td><code>PAGEUP</code></td>
+            </tr>
+            <tr>
+              <td><code>PAGEDOWN</code></td>
+            </tr>
+            <tr>
+              <td><code>UP</code> or <code>UPARROW</code></td>
+            </tr>
+            <tr>
+              <td><code>DOWN</code> or <code>DOWNARROW</code></td>
+            </tr>
+            <tr>
+              <td><code>LEFT</code> or <code>LEFTARROW</code></td>
+            </tr>
+            <tr>
+              <td><code>RIGHT</code> or <code>RIGHTARROW</code></td>
+            </tr>
+            <tr>
+              <td><code>TAB</code></td>
+            </tr>
+            <tr>
+              <td><code>END</code></td>
+            </tr>
+            <tr>
+              <td><code>ESC</code> or <code>ESCAPE</code></td>
+            </tr>
+            <tr>
+              <td><code>SPACE</code></td>
+            </tr>
+            <tr>
+              <td><code>PAUSE or BREAK</code></td>
+            </tr>
+            <tr>
+              <td><code>CAPSLOCK</code></td>
+            </tr>
+            <tr>
+              <td><code>NUMLOCK</code></td>
+            </tr>
+            <tr>
+              <td><code>PRINTSCREEN</code></td>
+            </tr>
+            <tr>
+              <td><code>SCROLLLOCK</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <footer>
+      <a href="https://github.com/spacehuhn/WiFiDuck" target="_blank">Source</a>
+      <br /><br />
+      <span id="version"></span><br />
+      Copyright (c) 2021 Juergen Skrotzky (ESP32 fork and extensions for profile and keypad)<br>
+      Copyright (c) 2019 Stefan Kremser (Base project)<br>
+      <a href="https://spacehuhn.io" target="_blank">spacehuhn.io</a>
+    </footer>
+  </body>
 </html>

@@ -6,7 +6,7 @@
 #pragma once
 
 namespace webserver {
-    void begin();
-    void update();
-    void send(const char* str);
-}
+void begin();
+void update();
+void send(const char* str);
+}  // namespace webserver

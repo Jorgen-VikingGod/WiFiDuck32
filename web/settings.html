@@ -1,6 +1,7 @@
 <!--
+   Copyright (c) 2019 Stefan Kremser
    This software is licensed under the MIT License. See the license file for details.
-   Source: https://github.com/spacehuhntech/WiFiDuck
+   Source: github.com/spacehuhn/WiFiDuck
 -->
 <!DOCTYPE html>
 <html>
@@ -11,10 +12,10 @@
 		<meta name="description" content="WiFi Duck">
 		<meta name="author" content="Spacehuhn - Stefan Kremser">
 		<link rel="stylesheet" type="text/css" href="style.css">
-
+                <script src="config.js"></script>
 		<script src="script.js"></script>
 		<script src="settings.js"></script>
-    	<title>WiFi Duck | Settings</title>
+    	<title>WiFi Duck 32 | Settings</title>
   	</head>
   	<body>
 		<nav>
@@ -29,7 +30,7 @@
 		<main>
 			<section>
 				<h1>WiFi</h1>
-				<p>Restart the device to apply new settings.</p>
+
 				<table>
 				<tr>
 					<td>SSID:</td>
@@ -52,6 +53,9 @@
 					<td><button class="warn" id="disable_autorun">disable</button></td>
 				</tr>
 				</table>
+
+				<p>Restart the device to apply new settings.</p>
+
 				<button class="danger" id="reset">Reset settings</button>
 			</section>
 			<section>
@@ -71,8 +75,9 @@
           	<a href="https://github.com/spacehuhn/WiFiDuck" target="_blank">Source</a>
           	<br><br>
           	<span id="version"></span><br>
-          	Copyright (c) 2019 Stefan Kremser<br>
-          	<a href="https://spacehuhn.io" target="_blank">spacehuhn.io</a>
-		</footer>
-	</body>
+  	        Copyright (c) 2021 Juergen Skrotzky (ESP32 fork and extensions for profile and keypad)<br>
+		Copyright (c) 2019 Stefan Kremser (Base project)<br>
+		<a href="https://spacehuhn.io" target="_blank">spacehuhn.io</a>
+	</footer>
+</body>
 </html>

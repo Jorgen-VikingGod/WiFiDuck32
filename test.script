@@ -1,14 +1,6 @@
 REM default delay
 DEFAULTDELAY 200
 
-REM LED Test
-LED 0 100 0
-LED 255 0 0
-DELAY 1000
-LED 0 255 0
-DELAY 1000
-LED 0 0 255
-
 REM open notepad
 GUI r
 STRING notepad

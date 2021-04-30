@@ -1,6 +1,7 @@
 /*
+   Copyright (c) 2019 Stefan Kremser
    This software is licensed under the MIT License. See the license file for details.
-   Source: https://github.com/spacehuhntech/WiFiDuck
+   Source: github.com/spacehuhn/WiFiDuck
  */
 /* Global */
 
@@ -12,7 +13,7 @@ body {
 }
 
 main {
-	width: 60vw;
+	width: 70vw;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -86,7 +87,7 @@ nav a:last-of-type {
 }
 
 .menu {
-	width: 60vw;
+	width: 70vw;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -341,6 +342,37 @@ th, td {
   	min-width: 180px;
 }
 
+.label {
+	width: 6em !important;
+}
+
+@media only screen and (max-width: 1250px), (min-device-width: 1250px) and (max-device-width: 1024px) {
+
+	.menu {
+		width: 80vw;
+	}
+
+	main {
+		width: 80vw !important;
+	}
+}
+
+@media only screen and (max-width: 1024px), (min-device-width: 1024px) and (max-device-width: 1024px) {
+
+	.menu {
+		width: 90vw;
+	}
+
+	main {
+		width: 90vw !important;
+	}
+
+	section {
+		width: 100% !important;
+	}
+}
+
+
 @media only screen and (max-width: 768px), (min-device-width: 768px) and (max-device-width: 1024px) {
 
 	.menu {
@@ -349,6 +381,10 @@ th, td {
 
 	main {
 		width: 90vw !important;
+	}
+
+	section {
+		width: 100% !important;
 	}
 
 	/* Force table to not be like tables anymore */
@@ -428,7 +464,7 @@ input[type="file"] {
 	padding: 7px 20px;
 }
 
-input[type="text"] {
+input[type="text"], input[type="number"], input[type="color"] {
 	color: #bfbfbf;
 	text-transform: none;
 	width: 10em;
@@ -436,6 +472,10 @@ input[type="text"] {
 
 input[type="text"]:hover {
 	cursor: text;
+}
+
+.small {
+	width: 4em !important;
 }
 
 input, button {
@@ -547,3 +587,204 @@ input:hover, button:hover {
     display: block;
   }
 }
+
+#keypad {
+	padding: 2px;
+	/*background: #2f3136;*/
+	border-radius: 4px;
+	overflow: hidden;
+	width: 336px;
+	color: #fff;
+	margin-right: 2em;
+  }
+
+  .key {
+	width: 50px;
+	height: 55px;
+	margin: 2px;
+	border-width: 3px 7px 10px;
+	border-style: solid;
+	border-radius: 4px;
+	float: left;
+	background: rgba(34, 37, 42, 0.5);
+	border-color: rgba(34, 37, 42, 0.5) rgba(34, 37, 42, 0.5) rgba(34, 37, 42, 0.5);
+	background-color: var(--color-up);
+	cursor: pointer;
+  }
+/*
+  .encoder {
+	width: 70px;
+	height: 75px;
+	margin: 10px;
+	border-width: 5px 7px 10px;
+	border-style: solid;
+	border-radius: 50%;
+	float: left;
+	background: rgba(34, 37, 42, 0.5);
+	border-color: rgba(34, 37, 42, 0.5) rgba(34, 37, 42, 0.5) rgba(34, 37, 42, 0.5);
+	background-color: var(--color-up);
+  }*/
+
+  .key:hover/*,
+  .encoder:hover */{
+	-webkit-transform: scale(0.95, 0.95);
+	-moz-transform: scale(0.95, 0.95);
+	-ms-transform: scale(0.95, 0.95);
+	-o-transform: scale(0.95, 0.95);
+	transform: scale(0.95, 0.95);
+
+	background-color: var(--color-down);
+  }
+
+  .key .keycap {
+	width: 50px;
+	height: 50px;
+	padding: 5px 0 0 0px;
+	text-align: center;
+	font-size: 13px;
+	line-height: 3.5;
+	background: rgba(34, 37, 42, 0.5);
+	background: -webkit-linear-gradient(left, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	background: -moz-linear-gradient(left, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	background: -ms-linear-gradient(left, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	background: -o-linear-gradient(left, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	background: linear-gradient(to right, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	border-radius: 4px;
+	position: relative;
+  }
+
+  /*.encoder .encodertop {
+	width: 70px;
+	height: 70px;
+	padding: 5px 0 0 0px;
+	text-align: center;
+	font-size: 13px;
+	line-height: 5;
+	background: rgba(34, 37, 42, 0.5);
+	background: -webkit-radial-gradient(
+	  circle,
+	  rgba(34, 37, 42, 0.5),
+	  rgba(54, 57, 62, 0.5),
+	  rgba(34, 37, 42, 0.5)
+	);
+	background: -moz-radial-gradient(circle, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	background: -ms-radial-gradient(circle, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	background: -o-radial-gradient(circle, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	background: radial-gradient(circle, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	border-radius: 50%;
+	position: relative;
+  }*/
+  .encoder {
+	width: 100px;
+	height: 100px;
+	color: #fff;
+	float: left;
+	margin: 1em;
+	cursor: pointer;
+  }
+  .encoder > .left{
+	display:block;
+	float: left;
+	height:98px;
+	width:48px;
+	position:relative;
+	margin-left: 0px;
+	border-radius: 50px 0 0 50px;
+	border-width: 2px;
+	border-style: solid;
+	border-color: rgba(54, 57, 62, 0.5) rgba(54, 57, 62, 0.5) rgba(54, 57, 62, 0.5);
+	background: rgba(54, 57, 62, 0.5);
+	  background: -webkit-radial-gradient(
+		circle,
+		rgba(34, 37, 42, 0.5),
+		rgba(54, 57, 62, 0.5),
+		rgba(34, 37, 42, 0.5)
+	  );
+	  background: -moz-radial-gradient(right, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	  background: -ms-radial-gradient(right, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	  background: -o-radial-gradient(right, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	  background: radial-gradient(right, rgba(54, 57, 62, 0.5), rgba(74, 77, 82, 0.5), rgba(54, 57, 62, 0.5));
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	background-color: var(--color-up);
+  }
+  .encoder > .left:hover {
+	-webkit-transform: scale(0.95, 0.95);
+	-moz-transform: scale(0.95, 0.95);
+	-ms-transform: scale(0.95, 0.95);
+	-o-transform: scale(0.95, 0.95);
+	transform: scale(0.95, 0.95);
+
+	background-color: var(--color-down);
+  }
+  .encoder > .right{
+	display:block;
+	height:98px;
+	width:48px;
+	position:relative;
+	margin-left:50px;
+	border-radius: 0 50px 50px 0;
+	border-width: 2px;
+	border-style: solid;
+	border-color: rgba(34, 37, 42, 0.5) rgba(34, 37, 42, 0.5) rgba(34, 37, 42, 0.5);
+	background: rgba(34, 37, 42, 0.5);
+	  background: -webkit-radial-gradient(
+		right,
+		rgba(34, 37, 42, 0.5),
+		rgba(54, 57, 62, 0.5),
+		rgba(34, 37, 42, 0.5)
+	  );
+	  background: -moz-radial-gradient(left, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	  background: -ms-radial-gradient(left, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	  background: -o-radial-gradient(left, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	  background: radial-gradient(left, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	background-color: var(--color-up);
+  }
+  .encoder > .right:hover {
+	-webkit-transform: scale(0.95, 0.95);
+	-moz-transform: scale(0.95, 0.95);
+	-ms-transform: scale(0.95, 0.95);
+	-o-transform: scale(0.95, 0.95);
+	transform: scale(0.95, 0.95);
+
+	background-color: var(--color-down);
+  }
+  .encoder > .middle{
+	position:absolute;
+	height:70px;
+	width:70px;
+	border-radius:70px;
+	/*top: 50px;
+	left: 50px;*/
+	margin-top:-90px;
+	margin-left: 12px;
+	text-align: center;
+	font-size: 18px;
+	line-height: 3.5;
+	border-width: 4px;
+	border-style: solid;
+	border-color: rgba(34, 37, 42, 0.5) rgba(34, 37, 42, 0.5) rgba(34, 37, 42, 0.5);
+	background: rgba(34, 37, 42, 0.5);
+	  background: -webkit-radial-gradient(
+		circle,
+		rgba(34, 37, 42, 0.5),
+		rgba(54, 57, 62, 0.5),
+		rgba(34, 37, 42, 0.5)
+	  );
+	  background: -moz-radial-gradient(circle, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	  background: -ms-radial-gradient(circle, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	  background: -o-radial-gradient(circle, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	  background: radial-gradient(circle, rgba(34, 37, 42, 0.5), rgba(54, 57, 62, 0.5), rgba(34, 37, 42, 0.5));
+	  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	background-color: var(--color-up);
+  }
+  .encoder > .middle:hover {-webkit-transform: scale(0.95, 0.95);
+	-moz-transform: scale(0.95, 0.95);
+	-ms-transform: scale(0.95, 0.95);
+	-o-transform: scale(0.95, 0.95);
+	transform: scale(0.95, 0.95);
+
+	background-color: var(--color-down);
+  }

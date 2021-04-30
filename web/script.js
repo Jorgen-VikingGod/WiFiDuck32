@@ -1,7 +1,11 @@
 /*
+   Copyright (c) 2019 Stefan Kremser
    This software is licensed under the MIT License. See the license file for details.
-   Source: https://github.com/spacehuhntech/WiFiDuck
+   Source: github.com/spacehuhn/WiFiDuck
  */
+
+var address = ip; //'192.168.188.65';
+var urlBase = 'http://' + address + '/';
 
 // ===== Helper Functions ===== //
 function log(msg) {
@@ -10,6 +14,9 @@ function log(msg) {
 
 function E(id) {
   return document.getElementById(id);
+}
+function C(id) {
+  return document.getElementById(id).firstElementChild;
 }
 
 function download_txt(fileName, fileContent) {
@@ -31,7 +38,7 @@ function fixFileName(fileName) {
       fileName = '/' + fileName;
     }
 
-    fileName = fileName.replace(/ /g, '\-');
+    fileName = fileName.replace(/ /g, '-');
   }
   return fileName;
 }
@@ -40,26 +47,26 @@ function fixFileName(fileName) {
 function status(mode) {
   current_status = mode;
 
-  if (mode == "connected") {
-    E("status").style.backgroundColor = "#3c5";
-  } else if (mode == "disconnected") {
-    E("status").style.backgroundColor = "#d33";
-  } else if (mode.includes("problem") || mode.includes("error")) {
-    E("status").style.backgroundColor = "#ffc107";
-  } else /*if (mode == "connecting...")*/ {
-    E("status").style.backgroundColor = "#0ae";
+  if (mode == 'connected') {
+    E('status').style.backgroundColor = '#3c5';
+  } else if (mode == 'disconnected') {
+    E('status').style.backgroundColor = '#d33';
+  } else if (mode.includes('problem') || mode.includes('error')) {
+    E('status').style.backgroundColor = '#ffc107';
+  } /*if (mode == "connecting...")*/ else {
+    E('status').style.backgroundColor = '#0ae';
   }
 
-  E("status").innerHTML = mode;
+  E('status').innerHTML = mode;
 }
 
 // ===== Web Socket ===== //
 function log_ws(msg) {
-  log("[WS] " + msg);
+  log('[WS] ' + msg);
 }
 
 function set_version(str) {
-  E("version").innerHTML = str;
+  E('version').innerHTML = str;
 }
 
 var ws = null; // web socket instance
@@ -67,14 +74,13 @@ var ws_callback = log_ws; // message receive callback
 var ws_msg_queue = []; // queue for outgoing messages
 var cts = false; // clear to send flag for message queue
 
-var current_status = "";
+var current_status = '';
 
 var ws_queue_interval = null;
 
 // ===== WebSocket Functions ===== //
 function ws_msg_queue_update() {
   if (cts && ws_msg_queue.length > 0) {
-
     var item = ws_msg_queue.shift();
 
     var message = item.message;
@@ -83,7 +89,7 @@ function ws_msg_queue_update() {
     ws.send(message);
     ws_callback = callback;
 
-    console.debug("# " + message);
+    console.debug('# ' + message);
     cts = false;
   }
 }
@@ -96,8 +102,8 @@ function ws_send(message, callback, force = false) {
 
 function ws_send_raw(message, callback, force = false) {
   var obj = {
-    "message": message,
-    "callback": callback
+    message: message,
+    callback: callback,
   };
 
   if (force) {
@@ -108,30 +114,30 @@ function ws_send_raw(message, callback, force = false) {
 }
 
 function ws_update_status() {
-  ws_send("status", status);
+  ws_send('status', status);
 }
 
 function ws_init() {
-  status("connecting...");
+  status('connecting...');
 
-  ws = new WebSocket("ws://192.168.4.1/ws");
+  ws = new WebSocket('ws://' + address + '/ws');
 
-  ws.onopen = function(event) {
-    log_ws("connected");
-    status("connected");
+  ws.onopen = function (event) {
+    log_ws('connected');
+    status('connected');
 
-    ws_send("close", log_ws, true);
-    ws_send("version", set_version);
+    ws_send('close', log_ws, true);
+    ws_send('version', set_version);
 
     ws_connected();
   };
 
-  ws.onclose = function(event) {
-    log_ws("disconnected");
-    status("disconnected");
+  ws.onclose = function (event) {
+    log_ws('disconnected');
+    status('disconnected');
   };
 
-  ws.onmessage = function(event) {
+  ws.onmessage = function (event) {
     var msg = event.data;
 
     log_ws(msg);
@@ -143,9 +149,9 @@ function ws_init() {
     cts = true;
   };
 
-  ws.onerror = function(event) {
-    log_ws("error");
-    status("error");
+  ws.onerror = function (event) {
+    log_ws('error');
+    status('error');
 
     console.error(event);
   };

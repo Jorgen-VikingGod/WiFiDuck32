@@ -82,7 +82,7 @@ def write_arrays(files, output):
 def main():
     web_files = os.listdir("web/")
 
-    outputfile = open("esp_duck/webfiles.h", "w+")
+    outputfile = open("esp_duck/src/webfiles.h", "w+")
     outputfile.write("#pragma once\n\n")
 
     outputfile.write(f"#define WEBSERVER_CALLBACK ")
