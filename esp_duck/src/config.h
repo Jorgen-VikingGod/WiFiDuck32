@@ -69,6 +69,7 @@
 #define ENCODER_A_PIN 39       // 36
 #define ENCODER_B_PIN 36       // 37
 #define ENCODER_BUTTON_PIN 32  // 32
+#define ENCODER_MODE_ROTARY 1  // rotary encoder, comment = no rotary pules, only 2 states (left, right)
 
 /*! ========== Safty checks ========== */
 #if !defined(ENABLE_I2C) && !defined(ENABLE_SERIAL)

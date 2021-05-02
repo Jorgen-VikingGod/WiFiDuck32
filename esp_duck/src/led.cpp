@@ -39,13 +39,13 @@ struct LEDAnimation {
   }
 };
 
-LEDAnimation animationFrame[NEOPIXEL_NUM] = {LEDAnimation(), LEDAnimation(), LEDAnimation(), LEDAnimation(),
-                                             LEDAnimation(), LEDAnimation(), LEDAnimation(), LEDAnimation(),
-                                             LEDAnimation(), LEDAnimation(), LEDAnimation()};
+LEDAnimation animationFrame[NEOPIXEL_NUM + 1] = {LEDAnimation(), LEDAnimation(), LEDAnimation(), LEDAnimation(),
+                                                 LEDAnimation(), LEDAnimation(), LEDAnimation(), LEDAnimation(),
+                                                 LEDAnimation(), LEDAnimation(), LEDAnimation(), LEDAnimation()};
 
 bool animationNeeded = false;
 
-Adafruit_NeoPixel leds = Adafruit_NeoPixel(NEOPIXEL_NUM, LED_PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel leds = Adafruit_NeoPixel(NEOPIXEL_NUM + 1, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 // ===== PUBLIC ====== //
 void begin() {
@@ -74,7 +74,7 @@ void update() {
     led::show();
   }
   if (animationNeeded) {
-    for (uint8_t k = 0; k < NEOPIXEL_NUM; k++) {
+    for (uint8_t k = 0; k < NEOPIXEL_NUM + 1; k++) {
       if (animationFrame[k].active) {
         if ((millis() - animationFrame[k].lastTime) > animationFrame[k].speed) {
           uint32_t startColor = leds.getPixelColor(k);
@@ -99,7 +99,7 @@ void update() {
     animationNeeded = animationFrame[0].active || animationFrame[1].active || animationFrame[2].active ||
                       animationFrame[3].active || animationFrame[4].active || animationFrame[5].active ||
                       animationFrame[6].active || animationFrame[7].active || animationFrame[8].active ||
-                      animationFrame[9].active || animationFrame[10].active;
+                      animationFrame[9].active || animationFrame[10].active || animationFrame[11].active;
   }
 }
 
