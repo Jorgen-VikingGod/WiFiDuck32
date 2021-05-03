@@ -25,13 +25,28 @@ void drawRect(int32_t x, int32_t y, int32_t w, int32_t h, const String& text, ui
   int32_t width = w - 2;
   int32_t height = h - 2;
 
-  int32_t textX = x + (width - textWidth) / 2 + 2;
-  int32_t textY = y + (height - tft.fontHeight()) / 2 + 2;
-
   tft.setTextColor(color);
   tft.drawRoundRect(x + 1, y + 1, width, height, 4, color);
-  // tft.setCursor(textX, textY);
-  tft.drawString(text, textX, textY);
+  if (textWidth > 0) {
+    int32_t textX = x + (width - textWidth) / 2 + 2;
+    int32_t textY = y + (height - tft.fontHeight()) / 2 + 2;
+    tft.drawString(text, textX, textY);
+  }
+}
+
+void drawCenterText(int32_t x, int32_t y, int32_t w, int32_t h, const String& text, uint32_t color, uint8_t textSize) {
+  tft.setTextSize(textSize);
+
+  int16_t textWidth = tft.textWidth(text);
+  int32_t width = w - 2;
+  int32_t height = h - 2;
+
+  tft.setTextColor(color);
+  if (textWidth > 0) {
+    int32_t textX = x + (width - textWidth) / 2 + 2;
+    int32_t textY = y + (height - tft.fontHeight()) / 2 + 2;
+    tft.drawString(text, textX, textY);
+  }
 }
 
 void drawCircle(int32_t x, int32_t y, int32_t w, int32_t h, const String& text, uint32_t color, uint8_t textSize) {
@@ -90,14 +105,6 @@ void espDelay(int ms) {
 void begin() {
   tft.init();
   tft.setRotation(3);
-  /*
-  tft.fillScreen(TFT_BLACK);
-  tft.setTextColor(TFT_GREEN);
-  tft.setTextSize(1);
-  tft.setSwapBytes(true);
-  tft.pushImage(0, 0, 240, 135, sonic);
-  espDelay(2000);
-  */
 }
 void update() {}
 
@@ -108,44 +115,4 @@ int16_t height() { return tft.height(); }
 
 void fillScreen(uint32_t c) { tft.fillScreen(c); }
 
-void showMenu1() {
-  int rectWidth = tft.width() / 4;
-  int rectHeight = tft.height() / 3;
-  tft.fillScreen(TFT_BLACK);
-
-  drawRect(0, 0, rectWidth, rectHeight, "F1", TFT_RED, 3);
-  drawRect(rectWidth, 0, rectWidth, rectHeight, "F2", TFT_GREEN, 3);
-  drawRect(rectWidth * 2, 0, rectWidth, rectHeight, "F3", TFT_GOLD, 3);
-  drawRect(rectWidth * 3, 0, rectWidth, rectHeight, "F4", TFT_CYAN, 3);
-
-  drawRect(0, rectHeight, rectWidth, rectHeight, "F5", TFT_MAGENTA, 2);
-  drawRect(rectWidth, rectHeight, rectWidth, rectHeight, "F6", TFT_GREENYELLOW, 2);
-  drawRect(rectWidth * 2, rectHeight, rectWidth, rectHeight, "F7", TFT_SILVER, 2);
-  drawRect(rectWidth * 3, rectHeight, rectWidth, rectHeight, "F8", TFT_BLUE, 2);
-
-  drawRect(0, rectHeight * 2, rectWidth, rectHeight, "F9", TFT_VIOLET, 1);
-  drawRect(rectWidth, rectHeight * 2, rectWidth, rectHeight, "F10", TFT_OLIVE, 1);
-  drawRect(rectWidth * 2, rectHeight * 2, rectWidth, rectHeight, "F11", TFT_MAROON, 1);
-}
-
-void showMenu2() {
-  int rectWidth = tft.width() / 4;
-  int rectHeight = tft.height() / 3;
-
-  tft.fillScreen(TFT_BLACK);
-
-  drawRect(0, 0, rectWidth, rectHeight, "ESC", TFT_BLUE);
-  drawRect(rectWidth, 0, rectWidth, rectHeight, "W", tft.color565(200, 150, 100), 4);
-  drawRect(rectWidth * 2, 0, rectWidth, rectHeight, "UNDO", TFT_SILVER);
-  drawRect(rectWidth * 3, 0, rectWidth, rectHeight, "REDO", TFT_GREENYELLOW);
-
-  drawRect(0, rectHeight, rectWidth, rectHeight, "A", TFT_MAGENTA, 4);
-  drawRect(rectWidth, rectHeight, rectWidth, rectHeight, "S", TFT_VIOLET, 4);
-  drawRect(rectWidth * 2, rectHeight, rectWidth, rectHeight, "D", TFT_OLIVE, 4);
-  drawRect(rectWidth * 3, rectHeight, rectWidth, rectHeight, "SAVE", TFT_GREEN);
-
-  drawRect(0, rectHeight * 2, rectWidth, rectHeight, "PREV", TFT_CYAN);
-  drawRect(rectWidth, rectHeight * 2, rectWidth, rectHeight, "NEXT", TFT_GOLD);
-  drawRect(rectWidth * 2, rectHeight * 2, rectWidth, rectHeight, "MODE", TFT_RED);
-}
 }  // namespace display

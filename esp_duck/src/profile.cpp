@@ -481,55 +481,6 @@ uint16_t colorByConfig(KeyColor color) {
   return display::colorRgbTo16(col.r, col.g, col.b);
 }
 uint8_t sizeByConfig(uint8_t size) { return (size > 0 ? size : config.size); }
-/*
-void showMenu() {
-  int rectWidth = display::width() / COLS;
-  int rectHeight = display::height() / ROWS - 8;
-  display::fillScreen(display::color24to16(0x0));
-
-  if (config.key1.active)
-    display::drawRect(0, 0, rectWidth, rectHeight, config.key1.name, colorByConfig(config.key1.down_color),
-                      sizeByConfig(config.key1.size));
-  if (config.key2.active)
-    display::drawRect(rectWidth, 0, rectWidth, rectHeight, config.key2.name, colorByConfig(config.key2.down_color),
-                      sizeByConfig(config.key2.size));
-  if (config.key3.active)
-    display::drawRect(rectWidth * 2, 0, rectWidth, rectHeight, config.key3.name, colorByConfig(config.key3.down_color),
-                      sizeByConfig(config.key3.size));
-  if (config.key4.active)
-    display::drawRect(rectWidth * 3, 0, rectWidth, rectHeight, config.key4.name, colorByConfig(config.key4.down_color),
-                      sizeByConfig(config.key4.size));
-
-  if (config.key8.active)
-    display::drawRect(0, rectHeight, rectWidth, rectHeight, config.key8.name, colorByConfig(config.key8.down_color),
-                      sizeByConfig(config.key8.size));
-  if (config.key7.active)
-    display::drawRect(rectWidth, rectHeight, rectWidth, rectHeight, config.key7.name,
-                      colorByConfig(config.key7.down_color), sizeByConfig(config.key7.size));
-  if (config.key6.active)
-    display::drawRect(rectWidth * 2, rectHeight, rectWidth, rectHeight, config.key6.name,
-                      colorByConfig(config.key6.down_color), sizeByConfig(config.key6.size));
-  if (config.key5.active)
-    display::drawRect(rectWidth * 3, rectHeight, rectWidth, rectHeight, config.key5.name,
-                      colorByConfig(config.key5.down_color), sizeByConfig(config.key5.size));
-
-  if (config.key9.active)
-    display::drawRect(0, rectHeight * 2, rectWidth, rectHeight, config.key9.name, colorByConfig(config.key9.down_color),
-                      sizeByConfig(config.key9.size));
-  if (config.key10.active)
-    display::drawRect(rectWidth, rectHeight * 2, rectWidth, rectHeight, config.key10.name,
-                      colorByConfig(config.key10.down_color), sizeByConfig(config.key10.size));
-  if (config.key11.active)
-    display::drawRect(rectWidth * 2, rectHeight * 2, rectWidth, rectHeight, config.key11.name,
-                      colorByConfig(config.key11.down_color), sizeByConfig(config.key11.size));
-
-  if (config.encoder.active)
-    display::drawCircle(rectWidth * 3, rectHeight * 2, rectWidth, rectHeight + 24, config.encoder.name,
-                        colorByConfig(config.encoder.down_color), sizeByConfig(config.encoder.size));
-
-  display::drawTitle(0, rectHeight * 3 + 5, config.name,
-                     display::colorRgbTo16(config.down_color.r, config.down_color.g, config.down_color.b), config.size);
-}*/
 
 void showMenu() {
   int rectWidth = display::width() / COLS - 2;

@@ -33,9 +33,9 @@ void setup() {
   delay(200);
 
   spiffs::begin();
-  webserver::begin();
 
   display::begin();
+  webserver::begin();
 
   com::begin();
   settings::begin();

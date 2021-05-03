@@ -19,6 +19,7 @@
 #include "cli.h"
 #include "spiffs.h"
 #include "settings.h"
+#include "display.h"
 
 #include "webfiles.h"
 
@@ -83,6 +84,19 @@ void saveConfigToJSON() {
   debugln("var ip = '" + WiFi.localIP().toString() + "';");
   // Close the file
   file.close();
+  int rectWidth = display::width() - 2;
+  int rectHeight = display::height() / 4 - 2;
+  display::fillScreen(display::color24to16(0x0));
+  display::drawRect(0, 0, rectWidth, rectHeight * 2, "", display::colorRgbTo16(255, 175, 0));
+  display::drawCenterText(0, 0, rectWidth, rectHeight, "WiFiDuck", display::colorRgbTo16(255, 175, 0), 4);
+  display::drawCenterText(0, rectHeight, rectWidth, rectHeight, "32", display::colorRgbTo16(255, 175, 0), 4);
+  display::drawRect(0, rectHeight * 2, rectWidth, rectHeight * 2, "", display::colorRgbTo16(0, 175, 255));
+  display::drawCenterText(0, rectHeight * 2, rectWidth, rectHeight,
+                          "Web interface:", display::colorRgbTo16(0, 175, 255));
+  display::drawCenterText(0, rectHeight * 3, rectWidth, rectHeight, WiFi.localIP().toString(),
+                          display::colorRgbTo16(0, 175, 255));
+  delay(5000);
+  display::fillScreen(display::color24to16(0x0));
 }
 
 // ===== PUBLIC ===== //
@@ -100,6 +114,7 @@ void begin() {
     delay(1000);
     WiFi.begin(STA_SSID, STA_PASSWORD);
   }
+
   saveConfigToJSON();
 
   MDNS.addService("http", "tcp", 80);

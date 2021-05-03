@@ -38,7 +38,7 @@
 #define FORMAT_SPIFFS_IF_FAILED true
 
 /*! ===== WiFi Settings ===== */
-#define WIFI_SSID "wifiduck"
+#define WIFI_SSID "WiFiDuck32"
 #define WIFI_PASSWORD "wifiduck"
 #define WIFI_CHANNEL "1"
 
@@ -50,7 +50,7 @@
 
 #define ARDUINO_RUNNING_CORE 1
 
-#define HOSTNAME "wifiduck"
+#define HOSTNAME "WiFiDuck32"
 #define URL "wifi.duck"
 
 #define EDITOR_USER "wifiduck"
