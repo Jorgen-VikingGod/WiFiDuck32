@@ -5,11 +5,11 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "WiFiDuck32"
-Date "2021-03-05"
-Rev "2"
+Date "2021-05-04"
+Rev "3"
 Comp "Juergen Skrotzky (JorgenVikingGod@gmail.com)"
 Comment1 "11key keypad with hot-plug sockets, RGB leds, rotary encoder and TFT display"
-Comment2 ""
+Comment2 "with Seeeduino XIAO"
 Comment3 ""
 Comment4 ""
 $EndDescr
@@ -34,17 +34,6 @@ F 2 "kbd:D3_TH_SMD_v2" H 1500 1650 50  0001 C CNN
 F 3 "~" H 1500 1650 50  0001 C CNN
 	1    1500 1650
 	0    1    1    0   
-$EndComp
-$Comp
-L kbd:ProMicro U1
-U 1 1 602074E3
-P 9825 2025
-F 0 "U1" H 9825 2968 60  0000 C CNN
-F 1 "ProMicro" H 9825 2862 60  0000 C CNN
-F 2 "kbd:ProMicro_v3" H 9825 2756 60  0000 C CNN
-F 3 "" H 9925 975 60  0000 C CNN
-	1    9825 2025
-	1    0    0    -1  
 $EndComp
 $Comp
 L Device:Rotary_Encoder_Switch ENC1
@@ -531,25 +520,9 @@ Keys
 Wire Notes Line
 	8525 650  6275 650 
 Wire Notes Line
-	8725 2900 10975 2900
+	8725 2975 10975 2975
 Text Notes 6500 900  0    100  ~ 0
 ESP32 Board
-NoConn ~ 10525 1875
-NoConn ~ 10525 1975
-NoConn ~ 10525 2075
-NoConn ~ 10525 2175
-NoConn ~ 10525 2275
-NoConn ~ 10525 2375
-NoConn ~ 10525 2475
-NoConn ~ 10525 2575
-NoConn ~ 9125 2575
-NoConn ~ 9125 2475
-NoConn ~ 9125 2375
-NoConn ~ 9125 2275
-NoConn ~ 9125 2175
-NoConn ~ 9125 2075
-NoConn ~ 9125 1575
-NoConn ~ 9125 1475
 Text GLabel 10375 5525 2    50   Input ~ 0
 SW
 Text GLabel 9400 5725 0    50   Input ~ 0
@@ -889,13 +862,13 @@ $EndComp
 $Comp
 L power:GND #PWR0130
 U 1 1 6048CAF5
-P 10650 1575
-F 0 "#PWR0130" H 10650 1325 50  0001 C CNN
-F 1 "GND" H 10475 1525 50  0000 C CNN
-F 2 "" H 10650 1575 50  0001 C CNN
-F 3 "" H 10650 1575 50  0001 C CNN
-	1    10650 1575
-	-1   0    0    1   
+P 10700 1675
+F 0 "#PWR0130" H 10700 1425 50  0001 C CNN
+F 1 "GND" H 10850 1675 50  0000 C CNN
+F 2 "" H 10700 1675 50  0001 C CNN
+F 3 "" H 10700 1675 50  0001 C CNN
+	1    10700 1675
+	1    0    0    -1  
 $EndComp
 $Comp
 L power:+5V #PWR0131
@@ -944,8 +917,6 @@ $EndComp
 Wire Wire Line
 	3275 6950 2875 6950
 Wire Wire Line
-	10650 1575 10525 1575
-Wire Wire Line
 	10375 5725 10425 5725
 $Comp
 L ESP32_DevKit_V1_DOIT:ESP32_DevKit_V1_DOIT U2
@@ -958,9 +929,9 @@ F 3 "https://aliexpress.com/item/32864722159.html" H 7000 3925 50  0001 C CNN
 	1    7450 2575
 	1    0    0    -1  
 $EndComp
-Text GLabel 9125 1975 0    50   Input ~ 0
+Text GLabel 8950 2275 0    50   Input ~ 0
 SCL
-Text GLabel 9125 1875 0    50   Input ~ 0
+Text GLabel 8950 2125 0    50   Input ~ 0
 SDA
 Text GLabel 8050 2675 2    50   Input ~ 0
 TFT_MOSI
@@ -979,13 +950,13 @@ NoConn ~ 8050 1475
 $Comp
 L power:+5V #PWR0129
 U 1 1 6048C6DD
-P 10725 1775
-F 0 "#PWR0129" H 10725 1625 50  0001 C CNN
-F 1 "+5V" H 10600 1850 50  0000 C CNN
-F 2 "" H 10725 1775 50  0001 C CNN
-F 3 "" H 10725 1775 50  0001 C CNN
-	1    10725 1775
-	-1   0    0    1   
+P 10700 1525
+F 0 "#PWR0129" H 10700 1375 50  0001 C CNN
+F 1 "+5V" H 10825 1525 50  0000 C CNN
+F 2 "" H 10700 1525 50  0001 C CNN
+F 3 "" H 10700 1525 50  0001 C CNN
+	1    10700 1525
+	1    0    0    -1  
 $EndComp
 Text GLabel 6850 1375 0    50   Input ~ 0
 RST
@@ -999,9 +970,6 @@ Wire Notes Line
 	8525 650  8525 4325
 Wire Notes Line
 	6275 650  6275 4325
-Wire Wire Line
-	10725 1775 10525 1775
-NoConn ~ 10525 1475
 $Comp
 L Connector:Conn_01x07_Female J1
 U 1 1 604C77CA
@@ -1049,14 +1017,10 @@ Text GLabel 9950 4075 0    50   Input ~ 0
 TFT_DC
 Text GLabel 9950 4175 0    50   Input ~ 0
 TFT_BL
-Text Notes 8975 900  0    100  ~ 0
-Pro Micro Board
-Wire Notes Line
-	8725 650  8725 2900
+Text Notes 8975 875  0    100  ~ 0
+XIAO
 Wire Notes Line
 	10975 650  8725 650 
-Wire Notes Line
-	10975 2900 10975 650 
 Text Notes 8925 3300 0    100  ~ 0
 TFT Display
 Wire Notes Line
@@ -1132,19 +1096,6 @@ F 3 "" H 8025 6125 50  0001 C CNN
 $EndComp
 Text GLabel 7625 6125 0    50   Input ~ 0
 BTN2
-$Comp
-L power:GND #PWR0141
-U 1 1 6057A5C8
-P 8800 1775
-F 0 "#PWR0141" H 8800 1525 50  0001 C CNN
-F 1 "GND" H 8850 1850 50  0000 C CNN
-F 2 "" H 8800 1775 50  0001 C CNN
-F 3 "" H 8800 1775 50  0001 C CNN
-	1    8800 1775
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	9125 1675 8800 1675
 $Comp
 L Device:C C1
 U 1 1 60593332
@@ -1400,15 +1351,8 @@ F 3 "~" H 7825 5325 50  0001 C CNN
 	1    7825 5125
 	1    0    0    -1  
 $EndComp
-Text GLabel 10800 1675 2    50   Input ~ 0
+Text GLabel 9900 975  1    50   Input ~ 0
 RST
-Wire Wire Line
-	10525 1675 10800 1675
-Wire Wire Line
-	8800 1675 8800 1775
-Wire Wire Line
-	8800 1775 9125 1775
-Connection ~ 8800 1775
 Wire Wire Line
 	9950 3675 9725 3675
 NoConn ~ 4875 6950
@@ -1473,4 +1417,116 @@ Wire Notes Line
 Wire Notes Line
 	7325 4575 7325 6325
 NoConn ~ 8050 1775
+$Comp
+L Seeeduino_XIAO:SeeeduinoXIAO U1
+U 1 1 6091EA7E
+P 9800 1975
+F 0 "U1" H 9025 2875 50  0000 C CNN
+F 1 "SeeeduinoXIAO" H 9250 2975 50  0000 C CNN
+F 2 "Seeeduino:Seeeduino XIAO-MOUDLE14P-2.54-21X17.8MM" H 9450 2175 50  0001 C CNN
+F 3 "" H 9450 2175 50  0001 C CNN
+	1    9800 1975
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10600 1675 10700 1675
+Wire Wire Line
+	10600 1525 10700 1525
+Wire Wire Line
+	9900 1075 9900 975 
+NoConn ~ 10600 1975
+NoConn ~ 10600 2125
+NoConn ~ 10600 2275
+NoConn ~ 10600 2425
+NoConn ~ 8950 1525
+NoConn ~ 8950 1675
+NoConn ~ 8950 1825
+NoConn ~ 8950 1975
+NoConn ~ 8950 2425
+NoConn ~ 9600 1075
+NoConn ~ 9750 1075
+$Comp
+L power:GND #PWR0140
+U 1 1 6095A96D
+P 10175 975
+F 0 "#PWR0140" H 10175 725 50  0001 C CNN
+F 1 "GND" H 10325 975 50  0000 C CNN
+F 2 "" H 10175 975 50  0001 C CNN
+F 3 "" H 10175 975 50  0001 C CNN
+	1    10175 975 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10050 1075 10050 975 
+Wire Wire Line
+	10050 975  10175 975 
+$Comp
+L power:GND #PWR0141
+U 1 1 6095E3AF
+P 9900 2825
+F 0 "#PWR0141" H 9900 2575 50  0001 C CNN
+F 1 "GND" H 10050 2825 50  0000 C CNN
+F 2 "" H 9900 2825 50  0001 C CNN
+F 3 "" H 9900 2825 50  0001 C CNN
+	1    9900 2825
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0142
+U 1 1 6095F0E8
+P 9575 2900
+F 0 "#PWR0142" H 9575 2750 50  0001 C CNN
+F 1 "+5V" H 9425 2950 50  0000 C CNN
+F 2 "" H 9575 2900 50  0001 C CNN
+F 3 "" H 9575 2900 50  0001 C CNN
+	1    9575 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9575 2900 9700 2900
+Wire Wire Line
+	9700 2900 9700 2825
+Wire Notes Line
+	10975 650  10975 2975
+Wire Notes Line
+	8725 650  8725 2975
+$Comp
+L Connector:Conn_01x01_Female J_GND1
+U 1 1 6099BE2C
+P 6450 5400
+F 0 "J_GND1" H 6478 5426 50  0000 L CNN
+F 1 "Conn_01x01_Female" H 6478 5335 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 6450 5400 50  0001 C CNN
+F 3 "~" H 6450 5400 50  0001 C CNN
+	1    6450 5400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Female J_RST1
+U 1 1 6099D6E1
+P 6450 5675
+F 0 "J_RST1" H 6478 5701 50  0000 L CNN
+F 1 "Conn_01x01_Female" H 6478 5610 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 6450 5675 50  0001 C CNN
+F 3 "~" H 6450 5675 50  0001 C CNN
+	1    6450 5675
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0143
+U 1 1 609A18AC
+P 5975 5400
+F 0 "#PWR0143" H 5975 5150 50  0001 C CNN
+F 1 "GND" H 6125 5300 50  0000 C CNN
+F 2 "" H 5975 5400 50  0001 C CNN
+F 3 "" H 5975 5400 50  0001 C CNN
+	1    5975 5400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5975 5400 6250 5400
+Text GLabel 6100 5675 0    50   Input ~ 0
+RST
+Wire Wire Line
+	6250 5675 6100 5675
 $EndSCHEMATC
