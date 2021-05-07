@@ -6,17 +6,22 @@
 #include "config.h"
 #include "debug.h"
 
-#include "keyboard.h"
+// #include "keyboard.h"
 #include "com.h"
 #include "duckparser.h"
 #include "serial_bridge.h"
+
+//Include this module whether using Arduino stack or TinyUSB stack
+#include <TinyUSB_Mouse_and_Keyboard.h>
 
 // ===== SETUP ====== //
 void setup() {
   debug_init();
 
   serial_bridge::begin();
-  keyboard::begin();
+  Keyboard.begin();
+  Mouse.begin();
+  //keyboard::begin();
   com::begin();
 
   debugs("Started! ");

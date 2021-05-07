@@ -8,7 +8,9 @@
 
 #include "config.h"
 // #include "debug.h"
-#include "keyboard.h"
+// #include "keyboard.h"
+//Include this module whether using Arduino stack or TinyUSB stack
+#include <TinyUSB_Mouse_and_Keyboard.h>
 
 extern "C" {
 #include "parser.h" // parse_lines
@@ -27,59 +29,64 @@ unsigned long sleepStartTime = 0;
 unsigned long sleepTime      = 0;
 
 void type(const char* str, size_t len) {
-  keyboard::write(str, len);
+  Keyboard.write((const uint8_t*)str, len);
+  // keyboard::write(str, len);
 }
 
 void press(const char* str, size_t len) {
   // character
-  if (len == 1) keyboard::press(str);
+  if (len == 1) Keyboard.press((uint8_t)*str);
 
   // Keys
-  else if (compare(str, len, "ENTER", CASE_SENSETIVE)) keyboard::pressKey(KEY_ENTER);
-  else if (compare(str, len, "MENU", CASE_SENSETIVE) || compare(str, len, "APP", CASE_SENSETIVE)) keyboard::pressKey(KEY_PROPS);
-  else if (compare(str, len, "DELETE", CASE_SENSETIVE)) keyboard::pressKey(KEY_BACKSPACE);
-  else if (compare(str, len, "HOME", CASE_SENSETIVE)) keyboard::pressKey(KEY_HOME);
-  else if (compare(str, len, "INSERT", CASE_SENSETIVE)) keyboard::pressKey(KEY_INSERT);
-  else if (compare(str, len, "PAGEUP", CASE_SENSETIVE)) keyboard::pressKey(KEY_PAGEUP);
-  else if (compare(str, len, "PAGEDOWN", CASE_SENSETIVE)) keyboard::pressKey(KEY_PAGEDOWN);
-  else if (compare(str, len, "UPARROW", CASE_SENSETIVE) || compare(str, len, "UP", CASE_SENSETIVE)) keyboard::pressKey(KEY_UP);
-  else if (compare(str, len, "DOWNARROW", CASE_SENSETIVE) || compare(str, len, "DOWN", CASE_SENSETIVE)) keyboard::pressKey(KEY_DOWN);
-  else if (compare(str, len, "LEFTARROW", CASE_SENSETIVE) || compare(str, len, "LEFT", CASE_SENSETIVE)) keyboard::pressKey(KEY_LEFT);
-  else if (compare(str, len, "RIGHTARROW", CASE_SENSETIVE) || compare(str, len, "RIGHT", CASE_SENSETIVE)) keyboard::pressKey(KEY_RIGHT);
-  else if (compare(str, len, "TAB", CASE_SENSETIVE)) keyboard::pressKey(KEY_TAB);
-  else if (compare(str, len, "END", CASE_SENSETIVE)) keyboard::pressKey(KEY_END);
-  else if (compare(str, len, "ESC", CASE_SENSETIVE) || compare(str, len, "ESCAPE", CASE_SENSETIVE)) keyboard::pressKey(KEY_ESC);
-  else if (compare(str, len, "F1", CASE_SENSETIVE)) keyboard::pressKey(KEY_F1);
-  else if (compare(str, len, "F2", CASE_SENSETIVE)) keyboard::pressKey(KEY_F2);
-  else if (compare(str, len, "F3", CASE_SENSETIVE)) keyboard::pressKey(KEY_F3);
-  else if (compare(str, len, "F4", CASE_SENSETIVE)) keyboard::pressKey(KEY_F4);
-  else if (compare(str, len, "F5", CASE_SENSETIVE)) keyboard::pressKey(KEY_F5);
-  else if (compare(str, len, "F6", CASE_SENSETIVE)) keyboard::pressKey(KEY_F6);
-  else if (compare(str, len, "F7", CASE_SENSETIVE)) keyboard::pressKey(KEY_F7);
-  else if (compare(str, len, "F8", CASE_SENSETIVE)) keyboard::pressKey(KEY_F8);
-  else if (compare(str, len, "F9", CASE_SENSETIVE)) keyboard::pressKey(KEY_F9);
-  else if (compare(str, len, "F10", CASE_SENSETIVE)) keyboard::pressKey(KEY_F10);
-  else if (compare(str, len, "F11", CASE_SENSETIVE)) keyboard::pressKey(KEY_F11);
-  else if (compare(str, len, "F12", CASE_SENSETIVE)) keyboard::pressKey(KEY_F12);
-  else if (compare(str, len, "SPACE", CASE_SENSETIVE)) keyboard::pressKey(KEY_SPACE);
-  else if (compare(str, len, "PAUSE", CASE_SENSETIVE) || compare(str, len, "BREAK", CASE_SENSETIVE)) keyboard::pressKey(KEY_PAUSE);
-  else if (compare(str, len, "CAPSLOCK", CASE_SENSETIVE)) keyboard::pressKey(KEY_CAPSLOCK);
-  else if (compare(str, len, "NUMLOCK", CASE_SENSETIVE)) keyboard::pressKey(KEY_NUMLOCK);
-  else if (compare(str, len, "PRINTSCREEN", CASE_SENSETIVE)) keyboard::pressKey(KEY_SYSRQ);
-  else if (compare(str, len, "SCROLLLOCK", CASE_SENSETIVE)) keyboard::pressKey(KEY_SCROLLLOCK);
+  else if (compare(str, len, "ENTER", CASE_SENSETIVE)) Keyboard.press(KEY_RETURN);
+  else if (compare(str, len, "BACKSPACE", CASE_SENSETIVE)) Keyboard.press(KEY_BACKSPACE);
+  else if (compare(str, len, "DELETE", CASE_SENSETIVE)) Keyboard.press(KEY_DELETE);
+  else if (compare(str, len, "HOME", CASE_SENSETIVE)) Keyboard.press(KEY_HOME);
+  else if (compare(str, len, "INSERT", CASE_SENSETIVE)) Keyboard.press(KEY_INSERT);
+  else if (compare(str, len, "PAGEUP", CASE_SENSETIVE)) Keyboard.press(KEY_PAGE_UP);
+  else if (compare(str, len, "PAGEDOWN", CASE_SENSETIVE)) Keyboard.press(KEY_PAGE_DOWN);
+  else if (compare(str, len, "UPARROW", CASE_SENSETIVE) || compare(str, len, "UP", CASE_SENSETIVE)) Keyboard.press(KEY_UP_ARROW);
+  else if (compare(str, len, "DOWNARROW", CASE_SENSETIVE) || compare(str, len, "DOWN", CASE_SENSETIVE)) Keyboard.press(KEY_DOWN_ARROW);
+  else if (compare(str, len, "LEFTARROW", CASE_SENSETIVE) || compare(str, len, "LEFT", CASE_SENSETIVE)) Keyboard.press(KEY_LEFT_ARROW);
+  else if (compare(str, len, "RIGHTARROW", CASE_SENSETIVE) || compare(str, len, "RIGHT", CASE_SENSETIVE)) Keyboard.press(KEY_RIGHT_ARROW);
+  else if (compare(str, len, "TAB", CASE_SENSETIVE)) Keyboard.press(KEY_TAB);
+  else if (compare(str, len, "END", CASE_SENSETIVE)) Keyboard.press(KEY_END);
+  else if (compare(str, len, "ESC", CASE_SENSETIVE) || compare(str, len, "ESCAPE", CASE_SENSETIVE)) Keyboard.press(KEY_ESC);
+  else if (compare(str, len, "F1", CASE_SENSETIVE)) Keyboard.press(KEY_F1);
+  else if (compare(str, len, "F2", CASE_SENSETIVE)) Keyboard.press(KEY_F2);
+  else if (compare(str, len, "F3", CASE_SENSETIVE)) Keyboard.press(KEY_F3);
+  else if (compare(str, len, "F4", CASE_SENSETIVE)) Keyboard.press(KEY_F4);
+  else if (compare(str, len, "F5", CASE_SENSETIVE)) Keyboard.press(KEY_F5);
+  else if (compare(str, len, "F6", CASE_SENSETIVE)) Keyboard.press(KEY_F6);
+  else if (compare(str, len, "F7", CASE_SENSETIVE)) Keyboard.press(KEY_F7);
+  else if (compare(str, len, "F8", CASE_SENSETIVE)) Keyboard.press(KEY_F8);
+  else if (compare(str, len, "F9", CASE_SENSETIVE)) Keyboard.press(KEY_F9);
+  else if (compare(str, len, "F10", CASE_SENSETIVE)) Keyboard.press(KEY_F10);
+  else if (compare(str, len, "F11", CASE_SENSETIVE)) Keyboard.press(KEY_F11);
+  else if (compare(str, len, "F12", CASE_SENSETIVE)) Keyboard.press(KEY_F12);
 
   // Modifiers
-  else if (compare(str, len, "CTRL", CASE_SENSETIVE) || compare(str, len, "CONTROL", CASE_SENSETIVE)) keyboard::pressModifier(KEY_MOD_LCTRL);
-  else if (compare(str, len, "SHIFT", CASE_SENSETIVE)) keyboard::pressModifier(KEY_MOD_LSHIFT);
-  else if (compare(str, len, "ALT", CASE_SENSETIVE)) keyboard::pressModifier(KEY_MOD_LALT);
-  else if (compare(str, len, "WINDOWS", CASE_SENSETIVE) || compare(str, len, "GUI", CASE_SENSETIVE)) keyboard::pressModifier(KEY_MOD_LMETA);
+  else if (compare(str, len, "CTRL", CASE_SENSETIVE) || compare(str, len, "CONTROL", CASE_SENSETIVE)) Keyboard.press(KEY_LEFT_CTRL);
+  else if (compare(str, len, "SHIFT", CASE_SENSETIVE)) Keyboard.press(KEY_LEFT_SHIFT);
+  else if (compare(str, len, "ALT", CASE_SENSETIVE)) Keyboard.press(KEY_LEFT_ALT);
+  else if (compare(str, len, "WINDOWS", CASE_SENSETIVE) || compare(str, len, "GUI", CASE_SENSETIVE)) Keyboard.press(KEY_LEFT_GUI);
+
+  else if (compare(str, len, "RCTRL", CASE_SENSETIVE) || compare(str, len, "CONTROL", CASE_SENSETIVE)) Keyboard.press(KEY_RIGHT_CTRL);
+  else if (compare(str, len, "RSHIFT", CASE_SENSETIVE)) Keyboard.press(KEY_RIGHT_SHIFT);
+  else if (compare(str, len, "RALT", CASE_SENSETIVE)) Keyboard.press(KEY_RIGHT_ALT);
+  else if (compare(str, len, "RWINDOWS", CASE_SENSETIVE) || compare(str, len, "RGUI", CASE_SENSETIVE)) Keyboard.press(KEY_RIGHT_GUI);
+
+  // mouse scroll wheel (handle in press method to get rid of the modifiers)
+  else if (compare(str, len, "SCROLLUP", CASE_SENSETIVE) || compare(str, len, "WHEELUP", CASE_SENSETIVE)) Mouse.move(0, 0, 1);
+  else if (compare(str, len, "SCROLLDOWN", CASE_SENSETIVE) || compare(str, len, "WHEELDOWN", CASE_SENSETIVE)) Mouse.move(0, 0, -1);
 
   // Utf8 character
-  else keyboard::press(str);
+  else Keyboard.press((uint8_t)*str);
 }
 
 void release() {
-  keyboard::release();
+  // keyboard::release();
+  Keyboard.releaseAll();
 }
 
 unsigned int toInt(const char* str, size_t len) {
@@ -154,6 +161,7 @@ void parse(const char* str, size_t len) {
       ignore_delay = true;
     }
 
+    /*
     // LOCALE (-> change keyboard layout)
     else if (compare(cmd->str, cmd->len, "LOCALE", CASE_SENSETIVE)) {
       word_node* w = cmd->next;
@@ -175,34 +183,79 @@ void parse(const char* str, size_t len) {
       }
       ignore_delay = true;
     }
+    */
 
     // DELAY (-> sleep for x ms)
     else if (compare(cmd->str, cmd->len, "DELAY", CASE_SENSETIVE)) {
       sleep(toInt(line_str, line_str_len));
       ignore_delay = true;
     }
-
-    // WHEEL_UP (wheel up, f.e. WHEEL_UP 2)
-    else if (compare(cmd->str, cmd->len, "WHEEL_UP", CASE_SENSETIVE)) {
-      Mouse.move(0, 0, toInt(line_str, line_str_len));
-      ignore_delay = true;
-    }
-
-    // WHEEL_DOWN (wheel down, f.e. WHEEL_DOWN 5)
-    else if (compare(cmd->str, cmd->len, "WHEEL_DOWN", CASE_SENSETIVE)) {
-      Mouse.move(0, 0, -1 * toInt(line_str, line_str_len));
-      ignore_delay = true;
-    }
-
-    // MOUSE (mouse button click, f.e. MOUSE LEFT, MOUSE RIGHT or MOUSE MIDDLE)
+    
+    // MOUSE handle (CLICK, PRESS, RELEASE, MOVE, SCROLL)
     else if (compare(cmd->str, cmd->len, "MOUSE", CASE_SENSETIVE)) {
       word_node* w = cmd->next;
-      if (compare(w->str, w->len, "LEFT", CASE_SENSETIVE)) {
-        Mouse.click(MOUSE_LEFT);
-      } else if (compare(w->str, w->len, "RIGHT", CASE_SENSETIVE)) {
-        Mouse.click(MOUSE_RIGHT);
-      } else if (compare(w->str, w->len, "MIDDLE", CASE_SENSETIVE)) {
-        Mouse.click(MOUSE_MIDDLE);
+      // CLICK (MOUSE CLICK LEFT, MOUSE CLICK RIGHT, MOUSE CLICK MIDDLE)
+      if (compare(cmd->str, cmd->len, "CLICK", CASE_SENSETIVE)) {
+        word_node* w = cmd->next;
+        if (compare(w->str, w->len, "LEFT", CASE_SENSETIVE)) {
+          Mouse.click(MOUSE_LEFT);
+        } else if (compare(w->str, w->len, "RIGHT", CASE_SENSETIVE)) {
+          Mouse.click(MOUSE_RIGHT);
+        } else if (compare(w->str, w->len, "MIDDLE", CASE_SENSETIVE)) {
+          Mouse.click(MOUSE_MIDDLE);
+        }
+      }
+      // PRESS (MOUSE PRESS LEFT, MOUSE PRESS RIGHT, MOUSE PRESS MIDDLE)
+      else if (compare(cmd->str, cmd->len, "PRESS", CASE_SENSETIVE)) {
+        word_node* w = cmd->next;
+        if (compare(w->str, w->len, "LEFT", CASE_SENSETIVE)) {
+          Mouse.press(MOUSE_LEFT);
+        } else if (compare(w->str, w->len, "RIGHT", CASE_SENSETIVE)) {
+          Mouse.press(MOUSE_RIGHT);
+        } else if (compare(w->str, w->len, "MIDDLE", CASE_SENSETIVE)) {
+          Mouse.press(MOUSE_MIDDLE);
+        }
+      }
+      // RELEASE (MOUSE RELEASE LEFT, MOUSE RELEASE RIGHT, MOUSE RELEASE MIDDLE)
+      else if (compare(cmd->str, cmd->len, "RELEASE", CASE_SENSETIVE)) {
+        word_node* w = cmd->next;
+        if (compare(w->str, w->len, "LEFT", CASE_SENSETIVE)) {
+          Mouse.release(MOUSE_LEFT);
+        } else if (compare(w->str, w->len, "RIGHT", CASE_SENSETIVE)) {
+          Mouse.release(MOUSE_RIGHT);
+        } else if (compare(w->str, w->len, "MIDDLE", CASE_SENSETIVE)) {
+          Mouse.release(MOUSE_MIDDLE);
+        }
+      }
+      // MOVE (MOUSE MOVE X UP 10, MOUSE MOVE Y DOWN 50)
+      else if (compare(cmd->str, cmd->len, "MOVE", CASE_SENSETIVE)) {
+        word_node* w = cmd->next;
+        if (compare(w->str, w->len, "X", CASE_SENSETIVE)) {
+          word_node* w = cmd->next;
+          if (compare(w->str, w->len, "UP", CASE_SENSETIVE)) {
+            Mouse.move(toInt(line_str, line_str_len), 0);
+          }
+          else if (compare(w->str, w->len, "DOWN", CASE_SENSETIVE)) {
+            Mouse.move(-1 * toInt(line_str, line_str_len), 0);
+          }
+        } else if (compare(w->str, w->len, "Y", CASE_SENSETIVE)) {
+          word_node* w = cmd->next;
+          if (compare(w->str, w->len, "UP", CASE_SENSETIVE)) {
+            Mouse.move(0, toInt(line_str, line_str_len));
+          }
+          else if (compare(w->str, w->len, "DOWN", CASE_SENSETIVE)) {
+            Mouse.move(0, -1 * toInt(line_str, line_str_len));
+          }
+        }
+      }
+      // SCROLL/WHEEL (MOUSE SCROLL UP 10, MOUSE WHEEL DOWN 1)
+      else if (compare(cmd->str, cmd->len, "SCROLL", CASE_SENSETIVE) || compare(cmd->str, cmd->len, "WHEEL", CASE_SENSETIVE)) {
+        word_node* w = cmd->next;
+        if (compare(w->str, w->len, "UP", CASE_SENSETIVE)) {
+          Mouse.move(0, 0, toInt(line_str, line_str_len));
+        } else if (compare(w->str, w->len, "DOWN", CASE_SENSETIVE)) {
+          Mouse.move(0, 0, -1 * toInt(line_str, line_str_len));
+        }
       }
       ignore_delay = true;
     }
@@ -230,6 +283,7 @@ void parse(const char* str, size_t len) {
       inString = !line_end;
     }
 
+    /*
     // KEYCODE
     else if (compare(cmd->str, cmd->len, "KEYCODE", CASE_SENSETIVE)) {
       word_node* w = cmd->next;
@@ -253,6 +307,7 @@ void parse(const char* str, size_t len) {
         keyboard::release();
       }
     }
+    */
 
     // Otherwise go through words and look for keys to press
     else {
